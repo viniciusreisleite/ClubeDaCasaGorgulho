@@ -12,8 +12,8 @@
       padding: 0;
     }
     body {
-      background: radial-gradient(circle at top right, #1f2937, #0b1120);
-      color: #ffffff;
+      background: radial-gradient(circle at top right, #f1f5f9, #e2e8f0);
+      color: #0f172a;
       font-family: 'Montserrat', sans-serif;
       width: 100vw;
       height: 100vh;
@@ -33,14 +33,14 @@
       flex: 0 0 35%;
       height: 100%;
       background: #000;
-      border-radius: 24px;
+      border-radius: 26px;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      border: 2px solid rgba(249, 115, 22, 0.2);
+      border: 3px solid #ffffff;
     }
     video {
       width: 100%;
@@ -53,23 +53,23 @@
       left: 0;
       width: 100%;
       height: 8px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
     }
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #f97316, #eab308);
+      background: linear-gradient(90deg, #ea580c, #f97316);
       transition: width 0.1s linear;
     }
 
-    /* Coluna Informativa com Identidade Clube da Casa */
+    /* Painel Informativo Fundo Branco */
     .info-section {
       flex: 1;
       height: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(249, 115, 22, 0.2);
-      border-radius: 24px;
+      background: #ffffff;
+      border-radius: 26px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.8);
       padding: 3.5vh 3vw;
       display: flex;
       flex-direction: column;
@@ -84,47 +84,50 @@
       align-items: center;
       gap: 25px;
       padding-bottom: 2vh;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 2px solid #f1f5f9;
     }
     .header-text {
       flex: 1;
     }
+    
+    /* Badge com a nova frase */
     .badge {
       display: inline-block;
       background: linear-gradient(135deg, #ea580c, #f97316);
-      color: #fff;
-      font-size: clamp(0.75rem, 1vw, 1.05rem);
+      color: #ffffff;
+      font-size: clamp(0.85rem, 1.1vw, 1.15rem);
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      padding: 6px 18px;
+      letter-spacing: 0.5px;
+      padding: 8px 22px;
       border-radius: 50px;
-      margin-bottom: 1vh;
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+      margin-bottom: 1.2vh;
+      box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
     }
+
+    /* Título com Destaque em Azul Marinho + Laranja Oficial */
     .header h1 {
-      font-size: clamp(1.4rem, 2.1vw, 2.5rem);
+      font-size: clamp(1.6rem, 2.3vw, 2.7rem);
       font-weight: 900;
-      line-height: 1.2;
-      color: #f8fafc;
+      line-height: 1.15;
+      color: #0f2942;
       letter-spacing: -0.5px;
     }
     .header h1 span {
-      color: #f97316;
+      color: #ea580c;
     }
 
-    /* Logo Transparente e Proeminente */
+    /* Logo em Destaque Ampliado */
     .logo-img {
-      height: clamp(85px, 13vh, 130px);
-      max-width: 250px;
+      height: clamp(100px, 15vh, 150px);
+      max-width: 280px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
     }
 
-    /* Área de Texto Auto-Ajustável */
+    /* Área de Texto em Azul e Auto-Ajustável */
     .caption-container {
       flex: 1;
-      margin-top: 2vh;
+      margin-top: 2.5vh;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -134,11 +137,11 @@
     }
     .caption-box {
       width: 100%;
-      color: #f3f4f6;
+      color: #034a70; /* Azul Oficial Legível */
       white-space: pre-line;
       word-break: break-word;
-      line-height: 1.45;
-      font-weight: 500;
+      line-height: 1.5;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -159,7 +162,7 @@
     <div class="info-section">
       <div class="header">
         <div class="header-text">
-          <span class="badge" id="post-badge">Destaque</span>
+          <span class="badge" id="post-badge">Feliz obra pra você!</span>
           <h1>Clube da Casa <span>Gorgulho</span></h1>
         </div>
         <img src="logo.png" alt="Logo Clube da Casa Gorgulho" class="logo-img" onerror="this.style.display='none'">
@@ -179,7 +182,6 @@
     const progressBar = document.getElementById('progress');
     const captionContainer = document.getElementById('caption-container');
     const captionText = document.getElementById('caption-text');
-    const postBadge = document.getElementById('post-badge');
 
     const urlParams = new URLSearchParams(window.location.search);
     const postId = parseInt(urlParams.get('post')) || 1;
@@ -191,14 +193,14 @@
       
       if (!containerW || !containerH) return;
 
-      let low = 10;
-      let high = 65;
+      let low = 12;
+      let high = 70;
       let optimal = low;
 
       for (let i = 0; i < 10; i++) {
         const mid = (low + high) / 2;
         captionText.style.fontSize = mid + 'px';
-        captionText.style.lineHeight = (mid * 1.35) + 'px';
+        captionText.style.lineHeight = (mid * 1.4) + 'px';
 
         const overflowH = captionText.scrollHeight > containerH;
         const overflowW = captionText.scrollWidth > containerW;
@@ -212,7 +214,7 @@
       }
 
       captionText.style.fontSize = optimal + 'px';
-      captionText.style.lineHeight = (optimal * 1.35) + 'px';
+      captionText.style.lineHeight = (optimal * 1.4) + 'px';
     }
 
     async function loadPostData() {
@@ -223,7 +225,6 @@
         const currentPost = posts.find(p => p.id === postId) || posts[0];
         
         captionText.innerText = currentPost.caption;
-        postBadge.innerText = `Destaque #${postId}`;
 
         requestAnimationFrame(() => {
           autoFitTextExact();
