@@ -28,7 +28,6 @@
       gap: 2.5vw;
     }
 
-    /* Coluna de Vídeo (Vertical 9:16) */
     .video-section {
       flex: 0 0 35%;
       height: 100%;
@@ -62,7 +61,6 @@
       transition: width 0.1s linear;
     }
 
-    /* Painel Informativo Fundo Branco */
     .info-section {
       flex: 1;
       height: 100%;
@@ -77,7 +75,6 @@
       overflow: hidden;
     }
 
-    /* Cabeçalho */
     .header {
       display: flex;
       justify-content: space-between;
@@ -90,7 +87,6 @@
       flex: 1;
     }
     
-    /* Badge com a nova frase */
     .badge {
       display: inline-block;
       background: linear-gradient(135deg, #ea580c, #f97316);
@@ -104,7 +100,6 @@
       box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
     }
 
-    /* Título com Destaque em Azul Marinho + Laranja Oficial */
     .header h1 {
       font-size: clamp(1.6rem, 2.3vw, 2.7rem);
       font-weight: 900;
@@ -116,7 +111,6 @@
       color: #ea580c;
     }
 
-    /* Logo em Destaque Ampliado */
     .logo-img {
       height: clamp(100px, 15vh, 150px);
       max-width: 280px;
@@ -124,7 +118,6 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
     }
 
-    /* Área de Texto em Azul e Auto-Ajustável */
     .caption-container {
       flex: 1;
       margin-top: 2.5vh;
@@ -137,7 +130,7 @@
     }
     .caption-box {
       width: 100%;
-      color: #034a70; /* Azul Oficial Legível */
+      color: #034a70;
       white-space: pre-line;
       word-break: break-word;
       line-height: 1.5;
@@ -148,9 +141,8 @@
 <body>
 
   <div class="tv-container">
-    <!-- Coluna de Vídeo -->
     <div class="video-section">
-      <video id="player" autoplay playsinline muted>
+      <video id="player" autoplay playsinline muted preload="auto">
         <source id="video-source" src="video_1.mp4" type="video/mp4">
       </video>
       <div class="progress-bar-container">
@@ -158,7 +150,6 @@
       </div>
     </div>
 
-    <!-- Coluna Informativa -->
     <div class="info-section">
       <div class="header">
         <div class="header-text">
@@ -186,7 +177,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     const postId = parseInt(urlParams.get('post')) || 1;
 
-    // Busca binária para achar o tamanho de fonte ideal sem cortes
+    let consecutiveErrors = 0;
+    const maxConsecutiveErrors = 5;
+
     function autoFitTextExact() {
       const containerW = captionContainer.clientWidth;
       const containerH = captionContainer.clientHeight;
@@ -217,9 +210,28 @@
       captionText.style.lineHeight = (optimal * 1.4) + 'px';
     }
 
+    player.addEventListener('error', () => {
+      consecutiveErrors++;
+      if (consecutiveErrors >= maxConsecutiveErrors) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      } else {
+        setTimeout(() => {
+          player.load();
+          player.play().catch(() => {});
+        }, 3000);
+      }
+    });
+
+    player.addEventListener('playing', () => {
+      consecutiveErrors = 0;
+    });
+
     async function loadPostData() {
+      const timestamp = new Date().getTime();
       try {
-        const res = await fetch('data.json?t=' + new Date().getTime());
+        const res = await fetch(`data.json?t=${timestamp}`);
         const posts = await res.json();
         
         const currentPost = posts.find(p => p.id === postId) || posts[0];
@@ -230,7 +242,7 @@
           autoFitTextExact();
         });
 
-        videoSource.src = currentPost.video_file;
+        videoSource.src = `${currentPost.video_file}?t=${timestamp}`;
         player.load();
         player.play().catch(e => console.log('Autoplay:', e));
       } catch (e) {
@@ -249,7 +261,7 @@
 
     player.addEventListener('ended', () => {
       player.currentTime = 0;
-      player.play();
+      player.play().catch(e => console.log('Erro ao reiniciar:', e));
     });
 
     loadPostData();
