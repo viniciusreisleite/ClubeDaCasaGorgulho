@@ -9,6 +9,6 @@
 .instagram.com	TRUE	/	TRUE	1814363154	ps_n	1
 .instagram.com	TRUE	/	TRUE	1796165852	ds_user_id	74914267157
 .instagram.com	TRUE	/	TRUE	1788994645	dpr	0.8999999761581421
-.instagram.com	TRUE	/	TRUE	1823529965	csrftoken	nr4LrALpTHelE2e5HDVquJqHM4kTnXgc
+.instagram.com	TRUE	/	TRUE	1823531918	csrftoken	nr4LrALpTHelE2e5HDVquJqHM4kTnXgc
 .instagram.com	TRUE	/	TRUE	1788994645	wd	2133x1012
 .instagram.com	TRUE	/	TRUE	0	rur	"MAZ\05474914267157\0541819925849:01fff902863e2ebe649ab305035e519dcda32de3aacc8b8189efdf74e12c41c3f4b2b1f6"
