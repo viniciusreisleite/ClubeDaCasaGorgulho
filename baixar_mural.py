@@ -3,7 +3,7 @@ import requests
 from playwright.sync_api import sync_playwright
 import yt_dlp
 
-# --- CONFIGURAÃ‡ÃƒO DE CONTAS ---
+# --- CONFIGURAÇÃO DE CONTAS ---
 ACCOUNTS = [
     {"username": "clubedacasa_gorgulho", "badge": "", "color": "#ff1744"}
 ]
@@ -48,7 +48,7 @@ def processar_mural():
     cache_local = carregar_cache()
     posts_a_manter = []
     
-    print("=== INICIANDO VERIFICAÃ‡ÃƒO RÃPIDA (INCREMENTAL) ===")
+    print("=== INICIANDO VERIFICAÇÃO RÁPIDA (INCREMENTAL) ===")
     
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -131,47 +131,21 @@ def processar_mural():
                                 tipo = "video"
                                 break
                     except Exception as e:
-                        # Se nÃ£o for vÃ­deo ou falhar, trata como imagem HD
                         tipo = "image" 
 
                 if tipo != "video":
+                    # Puxa imagem em HD
+                    img = page.query_selector('article img[srcset], article img[src]')
                     img_url = None
-                    
-                    # 1. Procura imagens renderizadas no corpo do post (dimensoes reais)
-                    imagens = page.query_selector_all('article img[srcset], main img[srcset], img[crossorigin="anonymous"]')
-                    for im in imagens:
-                        # Ignora avatar de perfil
-                        src = im.get_attribute("src") or ""
-                        if "s150x150" in src or "s320x320" in src:
-                            continue
-                        
-                        srcset = im.get_attribute("srcset")
+                    if img:
+                        srcset = img.get_attribute("srcset")
                         if srcset:
-                            # Pega a ultima URL (maior resolucao disponivel)
-                            partes = [p.strip().split(" ")[0] for p in srcset.split(",")]
-                            if partes:
-                                img_url = partes[-1]
-                                break
-                        elif src and not img_url:
-                            img_url = src
-
-                    # 2. Fallback caso nao localize no DOM
-                    if not img_url:
-                        meta_img = page.query_selector('meta[property="og:image"]')
-                        if meta_img:
-                            img_url = meta_img.get_attribute("content")
-
+                            cand_img = [s.strip().split(" ")[0] for s in srcset.split(",")]
+                            img_url = cand_img[-1] if cand_img else None
+                        if not img_url:
+                            img_url = img.get_attribute("src")
                     if img_url:
-                        try:
-                            baixar_imagem_hd(img_url, arquivo_final)
-                        except Exception as e:
-                            print(f"    Erro ao baixar: {e}")
-                        except Exception as e:
-                            print(f"    Erro ao baixar: {e}")
-                        except Exception as err:
-                            print(f"    Erro ao baixar imagem: {err}")
-                    else:
-                        print(f"    Aviso: Nao foi possivel extrair URL da imagem para {url}")
+                        baixar_imagem_hd(img_url, arquivo_final)
 
                 if os.path.exists(arquivo_final):
                     posts_a_manter.append({
@@ -187,7 +161,12 @@ def processar_mural():
 
         browser.close()
 
-    # ORGANIZAÃ‡ÃƒO FINAL DOS TOP 12 SLOTS
+    # TRAVA DE SEGURANÇA: Nunca limpa arquivos se nada foi identificado
+    if not posts_a_manter:
+        print("\nNenhum post localizado no momento. Mantendo arquivos locais intactos!")
+        return
+
+    # ORGANIZAÇÃO FINAL DOS TOP 12 SLOTS
     posts_finais = posts_a_manter[:TARGET_TOTAL]
     dados_json_novo = []
 
@@ -208,7 +187,7 @@ def processar_mural():
         arquivos_preservados.add(nome_slot)
         dados_json_novo.append(item)
 
-    # Limpeza de arquivos antigos (ex: posts que sairam do top 12)
+    # Limpeza de arquivos antigos
     for arq in os.listdir("."):
         if (arq.startswith("media_") or arq.startswith("temp_")) and (arq.endswith(".jpg") or arq.endswith(".mp4") or arq.endswith(".png")):
             if arq not in arquivos_preservados:
@@ -220,8 +199,7 @@ def processar_mural():
     with open(DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(dados_json_novo, f, indent=2, ensure_ascii=False)
 
-    print(f"ConcluÃ­do! {len(dados_json_novo)} mÃ­dias prontas e data.json atualizado.")
+    print(f"Concluído! {len(dados_json_novo)} mídias prontas e data.json atualizado.")
 
 if __name__ == "__main__":
     processar_mural()
-
