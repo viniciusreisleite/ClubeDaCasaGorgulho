@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Clube da Casa Gorgulho</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Mural Digital - Clube da Casa Gorgulho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -15,8 +12,8 @@
       padding: 0;
     }
     body {
-      background: radial-gradient(circle at top right, #0d2847, #061526, #020912);
-      color: #ffffff;
+      background: radial-gradient(circle at top right, #f1f5f9, #e2e8f0);
+      color: #0f172a;
       font-family: 'Montserrat', sans-serif;
       width: 100vw;
       height: 100vh;
@@ -31,20 +28,18 @@
       gap: 2.5vw;
     }
 
-    /* Coluna de Vídeo */
     .video-section {
-      height: 100% !important;
-      aspect-ratio: 9 / 16 !important;
-      flex: 0 0 auto !important;
-      background: #000 !important;
-      border-radius: 26px !important;
-      overflow: hidden !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
-      border: 3px solid rgba(255, 255, 255, 0.1) !important;
+      flex: 0 0 35%;
+      height: 100%;
+      background: #000;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 3px solid #ffffff;
     }
     video, 
     .progress-bar-container {
@@ -53,24 +48,22 @@
       left: 0;
       width: 100%;
       height: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      z-index: 5;
+      background: rgba(0, 0, 0, 0.2);
     }
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #0284c7, #38bdf8, #7dd3fc);
+      background: linear-gradient(90deg, #ea580c, #f97316);
       transition: width 0.1s linear;
     }
 
-    /* Coluna Informativa */
     .info-section {
       flex: 1;
       height: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(18px);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      background: #ffffff;
       border-radius: 26px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.8);
       padding: 3.5vh 3vw;
       display: flex;
       flex-direction: column;
@@ -78,50 +71,49 @@
       overflow: hidden;
     }
 
-    /* Cabeçalho */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 25px;
       padding-bottom: 2vh;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 2px solid #f1f5f9;
     }
     .header-text {
       flex: 1;
     }
+    
     .badge {
       display: inline-block;
-      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      background: linear-gradient(135deg, #ea580c, #f97316);
       color: #ffffff;
-      font-size: clamp(0.75rem, 1vw, 1.05rem);
+      font-size: clamp(0.85rem, 1.1vw, 1.15rem);
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 6px 18px;
+      letter-spacing: 0.5px;
+      padding: 8px 22px;
       border-radius: 50px;
-      margin-bottom: 1vh;
-      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+      margin-bottom: 1.2vh;
+      box-shadow: 0 6px 16px rgba(234, 88, 12, 0.3);
     }
+
     .header h1 {
-      font-size: clamp(1.4rem, 2.2vw, 2.6rem);
+      font-size: clamp(1.6rem, 2.3vw, 2.7rem);
       font-weight: 900;
-      line-height: 1.2;
-      color: #f8fafc;
+      line-height: 1.15;
+      color: #0f2942;
       letter-spacing: -0.5px;
     }
     .header h1 span {
-      color: #38bdf8;
+      color: #ea580c;
     }
 
     .logo-img {
-      height: clamp(85px, 14vh, 140px);
-      max-width: 260px;
-      object-fit: cover;
-      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.8));
+      height: clamp(100px, 15vh, 150px);
+      max-width: 280px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
     }
 
-    /* Área de Texto Auto-Ajustável */
     
     
       
@@ -163,7 +155,7 @@
       font-size: 2.7vw !important;
       line-height: 1.4 !important;
       font-weight: 600 !important;
-      color: #222 !important;
+      color: #0f2b5c !important;
       word-wrap: break-word !important;
       white-space: pre-line !important;
       padding-bottom: 6rem !important;
@@ -184,7 +176,7 @@
       background: #000 !important;
       background-color: #000 !important;
     }
-          /* === Layout Adaptativo Dinamico === */
+              /* === Layout Adaptativo Dinamico === */
     .tv-container {
       display: flex !important;
       width: 100vw !important;
@@ -195,36 +187,22 @@
     }
     .video-section {
       height: 100% !important;
-      aspect-ratio: 9 / 16 !important;
-      flex: 0 0 auto !important;
       background: #000 !important;
-      border-radius: 26px !important;
+      border-radius: 24px !important;
       overflow: hidden !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
       position: relative !important;
-      border: 3px solid rgba(255, 255, 255, 0.1) !important;
     }
     /* QUANDO FOR VIDEO */
     .tv-container.is-video .video-section {
-      height: 100% !important;
-      aspect-ratio: 9 / 16 !important;
       flex: 0 0 auto !important;
-      background: #000 !important;
-      border-radius: 26px !important;
-      overflow: hidden !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
-      border: 3px solid rgba(255, 255, 255, 0.1) !important;
+      aspect-ratio: 9 / 16 !important;
     }
     .tv-container.is-video video {
-      width: auto !important;
-      max-width: 50vw !important;
       width: 100% !important;
       height: 100% !important;
       object-fit: contain !important;
@@ -233,18 +211,9 @@
     }
     /* QUANDO FOR IMAGEM */
     .tv-container.is-image .video-section {
-      height: 100% !important;
-      aspect-ratio: 9 / 16 !important;
       flex: 0 0 auto !important;
-      background: #000 !important;
-      border-radius: 26px !important;
-      overflow: hidden !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      position: relative !important;
-      border: 3px solid rgba(255, 255, 255, 0.1) !important;
+      max-width: 45vw !important;
+      background: #050505 !important;
     }
     .tv-container.is-image #image-player {
       width: auto !important;
@@ -262,41 +231,33 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
       overflow: hidden !important;
     }
-          /* Contraste Maximo: Descricao Branca */
-    .caption-container,
-    .caption-box,
-    #caption-text,
-    #caption-container,
-    .caption {
-      color: #ffffff !important;
-      font-weight: 600 !important;
-    }
   </style>
 </head>
 <body>
 
   <div class="tv-container is-video" id="main-container">
-    <!-- Coluna de Vídeo -->
     <div class="video-section">
-      <img id="image-player" style="display:none; width:100%; height:100%; object-fit:contain; background-color:#050505;" /><video id="player" autoplay playsinline muted loop preload="auto" style="width:100%; height:100%; object-fit:contain; background-color:#050505;"><source id="video-source" src="" type="video/mp4"></video>
+      <img id="image-player" style="display:none; width:100%; height:100%; object-fit:contain; background-color:#050505;" />
+        <video id="player" autoplay playsinline muted loop preload="auto">
+        <source id="video-source" src="" type="video/mp4">
+      </video>
       <div class="progress-bar-container">
         <div class="progress-bar" id="progress"></div>
       </div>
     </div>
 
-    <!-- Coluna Informativa -->
     <div class="info-section">
       <div class="header">
         <div class="header-text">
-          <span class="badge">Informa & Conecta</span>
-          <h1>Prefeitura de <span>São Lourenço</span></h1>
+          <span class="badge" id="post-badge">Feliz obra pra você!</span>
+          <h1>Clube da Casa <span>Gorgulho</span></h1>
         </div>
-        <img src="logo.png" alt="Logo Prefeitura de São Lourenço" class="logo-img" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Logo Clube da Casa Gorgulho" class="logo-img" onerror="this.style.display='none'">
       </div>
 
       <div class="caption-container" id="caption-container">
         <div class="caption-box" id="caption-text">
-          Carregando informações oficiais...
+          Carregando novidades e ofertas...
         </div>
       </div>
     </div>
@@ -385,7 +346,7 @@
             iniciarAutoScroll(containerElem);
           }
 
-          var midiaArquivo = currentPost.media || currentPost.media_file || currentPost.video_file || currentPost.arquivo || '';
+          var midiaArquivo = currentPost.media || currentPost.media_file || currentPost.video_file;
           var isFoto = currentPost.type === 'image' || (midiaArquivo && (midiaArquivo.indexOf('.jpg') !== -1 || midiaArquivo.indexOf('.png') !== -1));
 
           if (isFoto) {
@@ -414,17 +375,6 @@
               player.defaultMuted = true;
               player.loop = true;
 
-              // Auto-ajuste dinâmico: vertical (9:16) ou horizontal/quadrado (layout flexível)
-              player.onloadedmetadata = function() {
-                if (player.videoWidth >= player.videoHeight) {
-                  mainContainer.classList.remove('is-video');
-                  mainContainer.classList.add('is-image');
-                } else {
-                  mainContainer.classList.remove('is-image');
-                  mainContainer.classList.add('is-video');
-                }
-              };
-
               player.onended = function() {
                 player.currentTime = 0;
                 player.play().catch(function() {});
@@ -448,8 +398,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
