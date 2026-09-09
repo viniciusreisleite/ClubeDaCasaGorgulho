@@ -26,6 +26,7 @@
       height: 100%;
       padding: 3vh 2.5vw;
       gap: 2.5vw;
+      box-sizing: border-box;
     }
 
     .video-section {
@@ -41,7 +42,13 @@
       position: relative;
       border: 3px solid #ffffff;
     }
-    video, 
+    video, #image-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #000;
+      background-color: #000;
+    }
     .progress-bar-container {
       position: absolute;
       bottom: 0;
@@ -102,9 +109,11 @@
       line-height: 1.15;
       color: #0f2942;
       letter-spacing: -0.5px;
+      text-transform: uppercase !important;
     }
     .header h1 span {
       color: #ea580c;
+      text-transform: uppercase !important;
     }
 
     .logo-img {
@@ -114,133 +123,35 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
     }
 
-    
-    
-      
-    video, #image-player {
-      background: #000 !important;
-      background-color: #000 !important;
-    }
-      .header-text h1, .header h1 {
-      text-transform: uppercase !important;
-}
-      /* Motor TV Standard 2026 */
-    .header-text h1, .header h1 {
-      text-transform: uppercase !important;
-    }
-    .header-text h1 span, .header h1 span {
-      text-transform: uppercase !important;
-    }
-    .info-section {
-      height: 100vh !important;
-      max-height: 100vh !important;
-      display: flex !important;
-      flex-direction: column !important;
-      overflow: hidden !important;
-      box-sizing: border-box !important;
-    }
     .caption-container {
-      flex: 1 1 auto !important;
-      height: 0 !important;
-      margin-top: 2rem !important;
-      overflow-y: scroll !important;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
-      position: relative !important;
+      flex: 1 1 auto;
+      height: 0;
+      margin-top: 2rem;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      position: relative;
     }
     .caption-container::-webkit-scrollbar {
-      display: none !important;
+      display: none;
     }
     .caption-box {
-      font-size: 2.7vw !important;
-      line-height: 1.4 !important;
-      font-weight: 600 !important;
-      color: #0f2b5c !important;
-      word-wrap: break-word !important;
-      white-space: pre-line !important;
-      padding-bottom: 6rem !important;
-    }
-    video, #image-player {
-      background: #000 !important;
-      background-color: #000 !important;
-    }
-      #image-player {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      background: #000 !important;
-      background-color: #000 !important;
-    }
-      video {
-      object-fit: contain !important;
-      background: #000 !important;
-      background-color: #000 !important;
-    }
-              /* === Layout Adaptativo Dinamico === */
-    .tv-container {
-      display: flex !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      padding: 1.5rem !important;
-      gap: 1.5rem !important;
-      box-sizing: border-box !important;
-    }
-    .video-section {
-      height: 100% !important;
-      background: #000 !important;
-      border-radius: 24px !important;
-      overflow: hidden !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      position: relative !important;
-    }
-    /* QUANDO FOR VIDEO */
-    .tv-container.is-video .video-section {
-      flex: 0 0 auto !important;
-      aspect-ratio: auto !important; width: auto !important;
-    }
-    .tv-container.is-video video {
-      width: auto !important;
-      max-width: 50vw !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      border-radius: 24px !important;
-      display: block !important;
-    }
-    /* QUANDO FOR IMAGEM */
-    .tv-container.is-image .video-section {
-      flex: 0 0 auto !important;
-      max-width: 45vw !important;
-      background: #050505 !important;
-    }
-    .tv-container.is-image #image-player {
-      width: auto !important;
-      max-width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      border-radius: 20px !important;
-      display: block !important;
-    }
-    .info-section {
-      flex: 1 !important;
-      height: 100% !important;
-      max-height: 100% !important;
-      border-radius: 24px !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-      overflow: hidden !important;
+      font-size: 2.7vw;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #0f2b5c;
+      word-wrap: break-word;
+      white-space: pre-line;
+      padding-bottom: 6rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="tv-container is-video" id="main-container">
+  <div class="tv-container" id="main-container">
     <div class="video-section">
-      <img id="image-player" style="display:none; width:100%; height:100%; object-fit:contain; background-color:#050505;" />
-        <video id="player" autoplay playsinline muted loop preload="auto">
+      <img id="image-player" style="display:none;" />
+      <video id="player" autoplay playsinline muted loop preload="auto">
         <source id="video-source" src="" type="video/mp4">
       </video>
       <div class="progress-bar-container">
@@ -265,7 +176,7 @@
     </div>
   </div>
 
-          <script>
+  <script>
     function iniciarAutoScroll(container) {
       if (!container) return;
       if (window.__scrollInterval) clearInterval(window.__scrollInterval);
@@ -308,7 +219,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      var mainContainer = document.getElementById('main-container') || document.querySelector('.tv-container');
       var containerElem = document.getElementById('caption-container');
       var captionElem = document.getElementById('caption-text') || containerElem;
       var player = document.getElementById('player');
@@ -348,14 +258,10 @@
             iniciarAutoScroll(containerElem);
           }
 
-          var midiaArquivo = currentPost.media || currentPost.media_file || currentPost.video_file;
-          var isFoto = currentPost.type === 'image' || (midiaArquivo && (midiaArquivo.indexOf('.jpg') !== -1 || midiaArquivo.indexOf('.png') !== -1));
+          var midiaArquivo = currentPost.media || currentPost.media_file || currentPost.video_file || currentPost.arquivo;
+          var isFoto = currentPost.type === 'image' || currentPost.tipo === 'image' || (midiaArquivo && (midiaArquivo.indexOf('.jpg') !== -1 || midiaArquivo.indexOf('.png') !== -1));
 
           if (isFoto) {
-            if (mainContainer) {
-              mainContainer.classList.remove('is-video');
-              mainContainer.classList.add('is-image');
-            }
             if (player) {
               player.pause();
               player.style.display = 'none';
@@ -365,28 +271,12 @@
               imagePlayer.src = midiaArquivo + '?v=' + ts;
             }
           } else {
-            if (mainContainer) {
-              mainContainer.classList.remove('is-image');
-              mainContainer.classList.add('is-video');
-            }
             if (imagePlayer) imagePlayer.style.display = 'none';
             if (player && videoSource) {
               player.style.display = 'block';
-              player.style.backgroundColor = '#000';
               player.muted = true;
               player.defaultMuted = true;
               player.loop = true;
-
-              // Auto-ajuste dinâmico: vertical (9:16) ou horizontal/quadrado (layout flexível)
-              player.onloadedmetadata = function() {
-                if (player.videoWidth >= player.videoHeight) {
-                  mainContainer.classList.remove('is-video');
-                  mainContainer.classList.add('is-image');
-                } else {
-                  mainContainer.classList.remove('is-image');
-                  mainContainer.classList.add('is-video');
-                }
-              };
 
               player.onended = function() {
                 player.currentTime = 0;
@@ -411,5 +301,3 @@
   </script>
 </body>
 </html>
-
-
