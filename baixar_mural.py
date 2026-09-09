@@ -166,6 +166,8 @@ def processar_mural():
                             baixar_imagem_hd(img_url, arquivo_final)
                         except Exception as e:
                             print(f"    Erro ao baixar: {e}")
+                        except Exception as e:
+                            print(f"    Erro ao baixar: {e}")
                         except Exception as err:
                             print(f"    Erro ao baixar imagem: {err}")
                     else:
