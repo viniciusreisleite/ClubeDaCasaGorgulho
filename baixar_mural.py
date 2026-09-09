@@ -1,9 +1,9 @@
-import os, sys, json, time, re, shutil
+﻿import os, sys, json, time, re, shutil
 import requests
 from playwright.sync_api import sync_playwright
 import yt_dlp
 
-# --- CONFIGURAÇÃO DE CONTAS ---
+# --- CONFIGURAÃ‡ÃƒO DE CONTAS ---
 ACCOUNTS = [
     {"username": "clubedacasa_gorgulho", "badge": "", "color": "#ff1744"}
 ]
@@ -48,7 +48,7 @@ def processar_mural():
     cache_local = carregar_cache()
     posts_a_manter = []
     
-    print("=== INICIANDO VERIFICAÇÃO RÁPIDA (INCREMENTAL) ===")
+    print("=== INICIANDO VERIFICAÃ‡ÃƒO RÃPIDA (INCREMENTAL) ===")
     
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -110,7 +110,7 @@ def processar_mural():
                 arquivo_final = f"{post_temp_id}.jpg"
 
                 # Testa se eh video
-                video_elem = page.query_selector("video")
+                video_elem = page.query_selector("article video, main video")
                 if video_elem:
                     ydl_opts = {
                         'outtmpl': f'{post_temp_id}.%(ext)s',
@@ -131,7 +131,8 @@ def processar_mural():
                                 tipo = "video"
                                 break
                     except Exception as e:
-                        print(f"    Erro ao extrair vídeo: {e}")
+                        # Se nÃ£o for vÃ­deo ou falhar, trata como imagem HD
+                        tipo = "image" 
 
                 if tipo != "video":
                     # Puxa imagem em HD
@@ -161,7 +162,7 @@ def processar_mural():
 
         browser.close()
 
-    # ORGANIZAÇÃO FINAL DOS TOP 12 SLOTS
+    # ORGANIZAÃ‡ÃƒO FINAL DOS TOP 12 SLOTS
     posts_finais = posts_a_manter[:TARGET_TOTAL]
     dados_json_novo = []
 
@@ -194,7 +195,8 @@ def processar_mural():
     with open(DATA_JSON, "w", encoding="utf-8") as f:
         json.dump(dados_json_novo, f, indent=2, ensure_ascii=False)
 
-    print(f"Concluído! {len(dados_json_novo)} mídias prontas e data.json atualizado.")
+    print(f"ConcluÃ­do! {len(dados_json_novo)} mÃ­dias prontas e data.json atualizado.")
 
 if __name__ == "__main__":
     processar_mural()
+
