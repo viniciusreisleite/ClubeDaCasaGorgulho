@@ -1,7 +1,7 @@
 @echo off
 cd /d "%~dp0"
 echo ======================================================
-echo Atualizando mural: Clube da Casa Gorgulho
+echo Atualizando mural: ClubeDaCasaGorgulho
 echo ======================================================
 
 echo 1. Baixando fotos e videos do Instagram...
@@ -11,7 +11,7 @@ echo.
 echo 2. Enviando para o repositorio GitHub...
 git add -A
 
-git diff-index --quiet HEAD || git commit -m "Atualizacao automatica mural"
+git diff-index --quiet HEAD || git commit -m "Atualizacao automatica mural ClubeDaCasaGorgulho"
 git push origin main
 
 echo.
