@@ -135,18 +135,32 @@ def processar_mural():
                         tipo = "image" 
 
                 if tipo != "video":
-                    # Puxa imagem em HD
-                    img = page.query_selector('article img[srcset], article img[src]')
+                    # Puxa imagem em HD com fallback robusto
                     img_url = None
-                    if img:
-                        srcset = img.get_attribute("srcset")
-                        if srcset:
-                            cand_img = [s.strip().split(" ")[0] for s in srcset.split(",")]
-                            img_url = cand_img[-1] if cand_img else None
-                        if not img_url:
-                            img_url = img.get_attribute("src")
+                    
+                    # 1. Tenta pegar direto da meta tag og:image (muito mais confiavel)
+                    meta_img = page.query_selector('meta[property="og:image"]')
+                    if meta_img:
+                        img_url = meta_img.get_attribute("content")
+                    
+                    # 2. Se nao achou, tenta os seletores do DOM
+                    if not img_url:
+                        img = page.query_selector('article img[srcset], main img[srcset], img[style*="object-fit"]')
+                        if img:
+                            srcset = img.get_attribute("srcset")
+                            if srcset:
+                                cand_img = [s.strip().split(" ")[0] for s in srcset.split(",")]
+                                img_url = cand_img[-1] if cand_img else None
+                            if not img_url:
+                                img_url = img.get_attribute("src")
+
                     if img_url:
-                        baixar_imagem_hd(img_url, arquivo_final)
+                        try:
+                            baixar_imagem_hd(img_url, arquivo_final)
+                        except Exception as err:
+                            print(f"    Erro ao baixar imagem: {err}")
+                    else:
+                        print(f"    Aviso: Nao foi possivel extrair URL da imagem para {url}")
 
                 if os.path.exists(arquivo_final):
                     posts_a_manter.append({
