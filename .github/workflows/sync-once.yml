@@ -31,26 +31,9 @@ jobs:
           playwright install chromium --with-deps
 
       - name: Atualizar mural
-        env:
-          INSTAGRAM_COOKIES: ${{ secrets.INSTAGRAM_COOKIES }}
         shell: bash
         run: |
           set -euo pipefail
-          backup="$RUNNER_TEMP/cookies.txt.backup"
-          had_cookie=0
-          if [ -f cookies.txt ]; then
-            cp cookies.txt "$backup"
-            had_cookie=1
-          fi
-          cleanup() {
-            if [ "$had_cookie" = "1" ]; then
-              cp "$backup" cookies.txt
-            else
-              rm -f cookies.txt
-            fi
-          }
-          trap cleanup EXIT
-          printf '%s' "$INSTAGRAM_COOKIES" > cookies.txt
           python baixar_mural.py
 
       - name: Salvar alteracoes
